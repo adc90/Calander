@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <style>
+        .seven-cols .calendar-cell {
+            width: 14.285714285714285714285714285714%;
+        }
+
+        .calendar-container {
+            display: table;
+            width: 1200px;
+            border-radius: 5px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: lightgray;
+        }
+        .date-range {
+            z-index: 1;
+            background-color: #337ab7;
+            color: white;
+            padding: 10px;
+            width: 900px;
+        }
+
+        .calendar-cell-selected {
+            background-color: aliceblue;
+        }
+        .calendar-cell-range {
+            background-color: olive;
+        }
+        /* Calendar borders */
+        .calendar-cell {
+            position: relative;
+            text-align: right;
+            padding-right: 15px;
+            padding-left: 15px;
+            height: 100px;
+            cursor: pointer;
+            border-right-style: solid;
+            border-right-width: 1px;
+            border-right-color: lightgray;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: lightgray;
+        }
+
+        .calender-cell-disabled {
+            cursor: not-allowed;
+        }
+
+        .seven-cols:last-child .calendar-cell {
+            border-bottom: none;
+        }
+        .seven-cols span:last-child {
+            border-right: none;
+        }
+        .seven-cols:first-child .calendar-cell {
+            text-align: center;
+            height: 25px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="./collections.js"></script>
+    <script src="./calendar.js"></script>
+    <script>
+        $(document).on('ready', function () {
+            var calendar = $('#calendar').calendar({
+                startDate: '5/05/2016',
+                dateRanges: [
+                    {
+                        id: 'OrderPeriod',
+                        startDate: '06/04/2016',
+                        endDate: '06/08/2016',
+                        title: 'Orders Period',
+                        exclude: [],
+                        inclusive: true,
+                    },
+                    {
+                        title: 'Extraction Period',
+                        id: 'ExtractionPeriod',
+                        startDate: '05/04/2016',
+                        endDate: '06/03/2016',
+                        exclude: [],
+                        inclusive: true, //Can they touch. IE be on the same day 
+                    },
+                ],
+                datesDisabled: [
+                    '06/02/2016',
+                ],
+                highlightToday: true,
+
+            });
+            $(document).on('click', '#next, #previous', function () {
+                if ($(this).attr('id') === 'previous') {
+                    calendar.previousMonth();
+                } else if ($(this).attr('id') === 'next') {
+                    calendar.nextMonth();
+                }
+            });
+        });
+    </script>
+    <title>Calendar Demo</title>
+</head>
+<body>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="container">
+        <div class="row">
+            <div id="calendar"></div>
+        </div>
+        <br />
+        <div class="row">
+            <button class="btn-danger btn" id="previous">Previous</button>
+            <button class="btn-danger btn" id="next">Next</button>
+        </div>
+    </div>
+</body>
+</html>
